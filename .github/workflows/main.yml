@@ -1,0 +1,23 @@
+name: OWASP ZAP DAST Scan
+on: [push]
+
+jobs:
+  zap_scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build and Run App
+        run: |
+          npm install
+          node index.js &
+          # Aumentamos o sleep para garantir que o express subiu na porta 3000
+          sleep 20 
+
+      - name: ZAP Scan
+        uses: zaproxy/action-baseline@v0.12.0
+        with:
+          target: 'http://localhost:3000'
+          # Adicionamos 'allow_issue_writing: false' para evitar erros de permissão
+          allow_issue_writing: false
