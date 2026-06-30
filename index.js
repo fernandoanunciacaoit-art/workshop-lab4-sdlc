@@ -1,13 +1,15 @@
 const express = require('express');
+const helmet = require('helmet'); // 1. Importe o helmet
 const app = express();
 const port = 3000;
 
-// O uso do helmet seria a correção, mas propositalmente não vamos usá-lo aqui
-// para que o OWASP ZAP encontre a falta de cabeçalhos de segurança.
+// 2. Aplique o helmet como middleware para proteger contra várias vulnerabilidades de cabeçalhos
+app.use(helmet()); 
 
 app.get('/', (req, res) => {
   // Vulnerabilidade proposital: Reflected XSS
-  // O ZAP vai capturar que o parâmetro 'nome' não está sendo sanitizado.
+  // (O helmet protege os headers, mas este ponto de injeção continuará sendo um alerta 
+  // para você mostrar aos alunos como o DAST detecta entrada maliciosa)
   res.send(`<h1>Olá, bem-vindo!</h1><p>Seu parâmetro de busca foi: ${req.query.nome}</p>`);
 });
 
