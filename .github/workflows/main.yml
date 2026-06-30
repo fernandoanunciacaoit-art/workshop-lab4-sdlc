@@ -21,3 +21,5 @@ jobs:
           target: 'http://localhost:3000'
           # Adicionamos 'allow_issue_writing: false' para evitar erros de permissão
           allow_issue_writing: false
+          # CORREÇÃO: Definindo um nome de artefato simples e válido
+          artifact_name: zap-scan-report
