@@ -19,7 +19,7 @@ jobs:
         uses: zaproxy/action-baseline@v0.12.0
         with:
           target: 'http://localhost:3000'
-          # Adicionamos 'allow_issue_writing: false' para evitar erros de permissão
           allow_issue_writing: false
-          # CORREÇÃO: Definindo um nome de artefato simples e válido
-          artifact_name: zap-scan-report
+          # Ao deixar o artifact_name vazio, desativamos a tentativa de upload 
+          # que estava causando o erro Bad Request (400)
+          artifact_name: ""
