@@ -14,15 +14,7 @@ jobs:
           node index.js &
           sleep 20 
 
-      - name: ZAP Scan
-        uses: zaproxy/action-baseline@v0.12.0
-        with:
-          target: 'http://localhost:3000'
-          allow_issue_writing: false
-        env:
-          # Isso instrui a action a pular a etapa de criação de artefatos
-          ARTIFACT_NAME: ""
-      
-      # Step extra para garantir que o pipeline não quebre mesmo se houver warnings
-      - name: Finalize Scan
-        run: echo "Scan concluído com sucesso."
+      - name: ZAP Scan (Sem Artefatos)
+        run: |
+          # Rodamos o ZAP via Docker diretamente, sem tentar salvar artefatos (usando /dev/null)
+          docker run --network=host -t ghcr.io/zaproxy/zaproxy:stable zap-baseline.py -t http://localhost:3000
